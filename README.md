@@ -1,4 +1,4 @@
-# 个人博客项目
+# 个人博客项目(zslxy1.github.io)
 
 这是一个基于Astro+Starlight+Tailwind CSS的个人博客项目，包含个人介绍、文章系统、技能展示等功能。
 
