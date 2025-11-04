@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { getSupabaseClient } from '../lib/supabase';
+import { useToast } from '../hooks/useToast';
 
 type Entry = {
   id: number;
@@ -10,6 +11,7 @@ type Entry = {
 
 const GuestbookIsland: React.FC = () => {
   const supabase = getSupabaseClient();
+  const { success, error: toastError } = useToast();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
@@ -59,6 +61,13 @@ const GuestbookIsland: React.FC = () => {
     };
   }, [supabase]);
 
+  // 当登录状态或 clientId 变化时，刷新剩余次数
+  useEffect(() => {
+    if (!supabase) return;
+    refreshRemaining(userId, clientId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, clientId]);
+
   const startOfTodayISO = () => {
     const d = new Date();
     d.setHours(0, 0, 0, 0);
@@ -88,6 +97,27 @@ const GuestbookIsland: React.FC = () => {
     }
     const used = count ?? 0;
     setRemaining(Math.max(0, limit - used));
+  };
+
+  // 本地时区名称与下次重置时间（按本地时区每日 00:00）
+  const localTZ = useMemo(() => Intl.DateTimeFormat().resolvedOptions().timeZone ?? '本地时区', []);
+  const nextResetLabel = useMemo(() => {
+    const now = new Date();
+    const nextMidnight = new Date(now);
+    nextMidnight.setHours(24, 0, 0, 0);
+    return new Intl.DateTimeFormat('zh-CN', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      timeZoneName: 'short'
+    }).format(nextMidnight);
+  }, []);
+
+  // 错误文案本地化
+  const translateError = (msg: string) => {
+    if (!msg) return '提交失败，请稍后再试';
+    if (/permission denied/i.test(msg)) return '权限不足：请检查数据库策略或登录后再试';
+    if (/duplicate key/i.test(msg)) return '重复提交，请稍后再试';
+    return msg; // 默认透传服务端错误（SQL 触发器已使用中文）
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -120,11 +150,16 @@ const GuestbookIsland: React.FC = () => {
       .insert(payload)
       .select('*')
       .single();
-    if (error) setError(error.message || '提交失败，请稍后再试');
+    if (error) {
+      const msg = translateError(error.message);
+      setError(msg);
+      toastError(msg);
+    }
     else {
       setEntries([data as Entry, ...entries]);
       setContent('');
       await refreshRemaining(userId, clientId);
+      success('提交成功');
     }
     setLoading(false);
   };
@@ -170,6 +205,10 @@ const GuestbookIsland: React.FC = () => {
           <button onClick={signInWithGithub} disabled={authLoading} className="px-3 py-1 rounded bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900">使用 GitHub 登录</button>
         )}
         <span className="ml-auto text-sm text-gray-600 dark:text-gray-300">今天还剩 {remaining}/{dailyLimit} 次</span>
+      </div>
+
+      <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+        重置时间：每天 00:00（{localTZ}），下次重置约为 {nextResetLabel}
       </div>
 
       <form onSubmit={submit} className="mb-6">
