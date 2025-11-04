@@ -1,0 +1,10 @@
+---
+import HomeIsland from "../islands/HomeIsland";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <Fragment slot="head">
+    <title>个人博客 - 首页</title>
+  </Fragment>
+  <HomeIsland client:load />
+</BaseLayout>

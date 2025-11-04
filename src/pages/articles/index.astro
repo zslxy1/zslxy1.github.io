@@ -1,0 +1,10 @@
+---
+import ArticlesIsland from "../../islands/ArticlesIsland";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <Fragment slot="head">
+    <title>文章 - 个人博客</title>
+  </Fragment>
+  <ArticlesIsland client:visible />
+</BaseLayout>

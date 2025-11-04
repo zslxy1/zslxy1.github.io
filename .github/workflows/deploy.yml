@@ -1,0 +1,32 @@
+name: Deploy Astro Site to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]  # 监听main分支推送
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20  # 匹配本地Node版本
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build site
+        run: npm run build  # 执行Astro构建命令
+        env:
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist  # Astro默认输出目录

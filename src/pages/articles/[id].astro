@@ -1,0 +1,17 @@
+---
+import ArticleDetailIsland from "../../islands/ArticleDetailIsland";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const { id } = Astro.params;
+
+// 为静态部署到 GitHub Pages，暂不生成动态文章详情路径。
+// 未来如果有文章数据源（例如从内容集合或接口获取），可在此返回实际路径列表。
+export async function getStaticPaths() {
+  return [];
+}
+---
+<BaseLayout>
+  <Fragment slot="head">
+    <title>文章详情 - 个人博客</title>
+  </Fragment>
+  <ArticleDetailIsland id={id} client:visible />
+</BaseLayout>

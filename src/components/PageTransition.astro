@@ -1,0 +1,54 @@
+---
+import { useEffect, useRef } from 'react';
+
+// 页面过渡组件
+const PageTransition = ({ children }: { children: React.ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    // 添加页面进入动画
+    if (ref.current) {
+      ref.current.classList.add('page-transition-enter-active');
+      
+      // 清理函数
+      return () => {
+        ref.current?.classList.remove('page-transition-enter-active');
+      };
+    }
+  }, []);
+
+  // 监听滚动事件，添加滚动进度条
+  useEffect(() => {
+    const handleScroll = () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      if (progressBar) {
+        progressBar.style.width = scrolled + '%';
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div>
+      {/* 滚动进度条 */}
+      <div className="progress-container">
+        <div id="progress-bar" className="progress-bar"></div>
+      </div>
+      
+      {/* 页面内容 */}
+      <div 
+        ref={ref}
+        className="page-transition-enter"
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export default PageTransition;
