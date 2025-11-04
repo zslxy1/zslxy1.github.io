@@ -4,6 +4,10 @@ on:
   push:
     branches: [ main ]  # 监听main分支推送
 
+# 给予 GITHUB_TOKEN 写入权限，允许推送到 gh-pages 分支
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
