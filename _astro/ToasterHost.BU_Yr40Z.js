@@ -1,0 +1,1 @@
+import{j as t}from"./jsx-runtime.nr21BytU.js";import{T as o}from"./index.CwGS6CU3.js";import"./index.C0x19RBR.js";import"./index.DOz7KsIS.js";function p(){return t.jsx(o,{position:"top-center"})}export{p as default};
