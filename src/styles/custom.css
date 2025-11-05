@@ -172,3 +172,105 @@ pre {
 .dark .markdown-body hr {
   border-color: #374151; /* border-gray-700 */
 }
+
+/* 更强的浅色模式覆盖（提升优先级，覆盖 github-markdown-css 默认颜色） */
+html.light .markdown-body,
+:root:not(.dark) .markdown-body,
+body.light .markdown-body,
+body:not(.dark) .markdown-body {
+  color: #1f2937 !important; /* text-gray-800 */
+}
+
+html.light .markdown-body p,
+:root:not(.dark) .markdown-body p,
+body.light .markdown-body p,
+body:not(.dark) .markdown-body p,
+html.light .markdown-body li,
+:root:not(.dark) .markdown-body li,
+body.light .markdown-body li,
+body:not(.dark) .markdown-body li,
+html.light .markdown-body strong,
+:root:not(.dark) .markdown-body strong,
+body.light .markdown-body strong,
+body:not(.dark) .markdown-body strong,
+html.light .markdown-body em,
+:root:not(.dark) .markdown-body em,
+body.light .markdown-body em,
+body:not(.dark) .markdown-body em {
+  color: #1f2937 !important; /* text-gray-800 */
+}
+
+html.light .markdown-body h1,
+html.light .markdown-body h2,
+html.light .markdown-body h3,
+html.light .markdown-body h4,
+html.light .markdown-body h5,
+html.light .markdown-body h6,
+:root:not(.dark) .markdown-body h1,
+:root:not(.dark) .markdown-body h2,
+:root:not(.dark) .markdown-body h3,
+:root:not(.dark) .markdown-body h4,
+:root:not(.dark) .markdown-body h5,
+:root:not(.dark) .markdown-body h6,
+body.light .markdown-body h1,
+body.light .markdown-body h2,
+body.light .markdown-body h3,
+body.light .markdown-body h4,
+body.light .markdown-body h5,
+body.light .markdown-body h6,
+body:not(.dark) .markdown-body h1,
+body:not(.dark) .markdown-body h2,
+body:not(.dark) .markdown-body h3,
+body:not(.dark) .markdown-body h4,
+body:not(.dark) .markdown-body h5,
+body:not(.dark) .markdown-body h6 {
+  color: #111827 !important; /* text-gray-900 */
+}
+
+html.light .markdown-body a,
+:root:not(.dark) .markdown-body a,
+body.light .markdown-body a,
+body:not(.dark) .markdown-body a {
+  color: #2563eb !important; /* text-blue-600 */
+}
+
+html.light .markdown-body code,
+html.light .markdown-body pre,
+:root:not(.dark) .markdown-body code,
+:root:not(.dark) .markdown-body pre,
+body.light .markdown-body code,
+body.light .markdown-body pre,
+body:not(.dark) .markdown-body code,
+body:not(.dark) .markdown-body pre {
+  background-color: #f8fafc !important; /* bg-gray-50 */
+  color: #111827 !important; /* text-gray-900 */
+}
+
+html.light .markdown-body pre code,
+:root:not(.dark) .markdown-body pre code,
+body.light .markdown-body pre code,
+body:not(.dark) .markdown-body pre code {
+  background: transparent !important;
+}
+
+html.light .markdown-body blockquote,
+:root:not(.dark) .markdown-body blockquote,
+body.light .markdown-body blockquote,
+body:not(.dark) .markdown-body blockquote {
+  color: #374151 !important; /* text-gray-700 */
+  border-left-color: #e5e7eb !important; /* border-gray-200 */
+}
+
+html.light .markdown-body table,
+:root:not(.dark) .markdown-body table,
+body.light .markdown-body table,
+body:not(.dark) .markdown-body table {
+  color: #1f2937 !important; /* text-gray-800 */
+}
+
+html.light .markdown-body hr,
+:root:not(.dark) .markdown-body hr,
+body.light .markdown-body hr,
+body:not(.dark) .markdown-body hr {
+  border-color: #e5e7eb !important; /* border-gray-200 */
+}
