@@ -15,7 +15,8 @@ import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism-tomorrow.css';
-import 'github-markdown-css/github-markdown.css';
+// 将自定义样式在 GitHub Markdown CSS 之后再次引入，以保证浅色/深色覆盖在岛组件样式之后注入，防止部分浏览器下被覆盖
+import '@/styles/custom.css';
 
 // 配置 marked 高亮（一次性配置）
 marked.use(
