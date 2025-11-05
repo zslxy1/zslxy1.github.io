@@ -134,7 +134,7 @@ pre {
 }
 
 .dark .markdown-body {
-  color: #e5e7eb; /* text-gray-200 */
+  color: #f3f4f6 !important; /* text-gray-100，提升夜间对比度 */
 }
 
 .dark .markdown-body h1,
@@ -147,13 +147,13 @@ pre {
 }
 
 .dark .markdown-body a {
-  color: #60a5fa; /* text-blue-400 */
+  color: #93c5fd !important; /* text-blue-300，夜间更亮 */
 }
 
 .dark .markdown-body code,
 .dark .markdown-body pre {
   background-color: #111827 !important; /* bg-gray-900 */
-  color: #e5e7eb !important; /* text-gray-200 */
+  color: #f3f4f6 !important; /* text-gray-100，提升可读性 */
 }
 
 .dark .markdown-body pre code {
@@ -171,6 +171,33 @@ pre {
 
 .dark .markdown-body hr {
   border-color: #374151; /* border-gray-700 */
+}
+
+/* 夜间模式下更强的覆盖，防止被其他全局类或浏览器样式降级为灰色 */
+html.dark .markdown-body p,
+html.dark .markdown-body li,
+html.dark .markdown-body strong,
+html.dark .markdown-body em,
+body.dark .markdown-body p,
+body.dark .markdown-body li,
+body.dark .markdown-body strong,
+body.dark .markdown-body em {
+  color: #f3f4f6 !important; /* 与页面主文本保持一致 */
+}
+
+html.dark .markdown-body h1,
+html.dark .markdown-body h2,
+html.dark .markdown-body h3,
+html.dark .markdown-body h4,
+html.dark .markdown-body h5,
+html.dark .markdown-body h6,
+body.dark .markdown-body h1,
+body.dark .markdown-body h2,
+body.dark .markdown-body h3,
+body.dark .markdown-body h4,
+body.dark .markdown-body h5,
+body.dark .markdown-body h6 {
+  color: #ffffff !important; /* 夜间标题更亮 */
 }
 
 /* 更强的浅色模式覆盖（提升优先级，覆盖 github-markdown-css 默认颜色） */
