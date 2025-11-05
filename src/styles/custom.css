@@ -134,7 +134,7 @@ pre {
 }
 
 .dark .markdown-body {
-  color: #fafafa !important; /* 更亮的浅白色，深蓝背景下更易读 */
+  color: #ffffff !important; /* 夜间主文本使用纯白 */
 }
 
 .dark .markdown-body h1,
@@ -153,7 +153,7 @@ pre {
 .dark .markdown-body code,
 .dark .markdown-body pre {
   background-color: #111827 !important; /* bg-gray-900 */
-  color: #f3f4f6 !important; /* text-gray-100，提升可读性 */
+  color: #ffffff !important; /* 代码文字使用纯白，更清晰 */
 }
 
 .dark .markdown-body pre code {
@@ -182,7 +182,7 @@ body.dark .markdown-body p,
 body.dark .markdown-body li,
 body.dark .markdown-body strong,
 body.dark .markdown-body em {
-  color: #fafafa !important; /* 与页面主文本保持一致且更亮 */
+  color: #ffffff !important; /* 与主文本保持一致，使用纯白 */
 }
 
 html.dark .markdown-body h1,
@@ -305,7 +305,8 @@ body:not(.dark) .markdown-body hr {
 /* ========== Markdown 基础排版（移除第三方后自给样式） ========== */
 .markdown-body {
   font-size: 1rem;
-  line-height: 1.75; /* ~28px */
+  line-height: 1.9; /* 稍增行高，降低长时间阅读疲劳 */
+  letter-spacing: 0.01em; /* 略增字间距提升可读性 */
   word-wrap: break-word;
 }
 
