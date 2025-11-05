@@ -17,7 +17,7 @@ export const articlesData: Article[] = [
     title: 'CS16 目标检测与自动瞄准项目',
     excerpt:
       '这是一个基于 YOLOv8 的 CS16 游戏辅助工具，核心功能包括屏幕区域截取、目标检测（默认检测敌人）和自动瞄准，支持 GPU/CPU 自适应运行，可实时显示检测结果并置顶窗口。',
-    date: '2025-11-05',
+    date: '2025-07-20',
     category: '计算机视觉',
     tags: ['YOLOv8', 'OpenCV', 'Python', 'Windows'],
     imageUrl:
