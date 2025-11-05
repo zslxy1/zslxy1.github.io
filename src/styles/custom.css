@@ -134,7 +134,7 @@ pre {
 }
 
 .dark .markdown-body {
-  color: #f3f4f6 !important; /* text-gray-100，提升夜间对比度 */
+  color: #fafafa !important; /* 更亮的浅白色，深蓝背景下更易读 */
 }
 
 .dark .markdown-body h1,
@@ -182,7 +182,7 @@ body.dark .markdown-body p,
 body.dark .markdown-body li,
 body.dark .markdown-body strong,
 body.dark .markdown-body em {
-  color: #f3f4f6 !important; /* 与页面主文本保持一致 */
+  color: #fafafa !important; /* 与页面主文本保持一致且更亮 */
 }
 
 html.dark .markdown-body h1,

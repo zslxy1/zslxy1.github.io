@@ -125,7 +125,7 @@ export default function ArticleDetailIsland({ id }: { id: string }) {
           <article className="max-w-3xl mx-auto">
             <img src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.imageUrl} alt={article.title} className="w-full h-56 object-cover rounded-xl mb-6" />
             <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <p className="text-sm text-gray-500 dark:text-gray-300 mb-4">
               发布于：{new Date(article.date).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })}
             </p>
             {/* GitHub 风格 Markdown 容器：移除暗色反相，改用自定义暗色覆盖样式，避免“割裂感” */}
@@ -145,7 +145,7 @@ export default function ArticleDetailIsland({ id }: { id: string }) {
           {/* 联系区域：统一社交链接与邮箱弹窗 */}
           <div className="mt-10">
             <h2 className="text-xl font-semibold mb-3">联系我</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">如果你有任何问题或合作意向，欢迎随时联系我！</p>
+            <p className="text-gray-600 dark:text-gray-200 mb-6">如果你有任何问题或合作意向，欢迎随时联系我！</p>
             <SocialLinksRow />
           </div>
           </article>
