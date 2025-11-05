@@ -9,11 +9,44 @@ import "../styles/animations.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
-    <slot name="head" />
+    <!-- 提前应用用户主题，避免页面切换时主题被重置或出现闪烁 -->
+    <style>
+      /* 预设页面背景，避免在主题脚本执行前出现白屏闪烁 */
+      html, body { background-color: #111827; }
+      @media (prefers-color-scheme: light) {
+        html, body { background-color: #f9fafb; }
+      }
+      /* 让头部在未确定主题前保持透明，主题确定后再应用对应背景 */
+      .site-header { background-color: transparent; }
+      html.light .site-header { background-color: rgba(255,255,255,0.70); }
+      html.dark .site-header { background-color: rgba(17,24,39,0.70); }
+    </style>
+    <script>
+      (() => {
+        try {
+          const el = document.documentElement;
+          const saved = localStorage.getItem('theme');
+          if (saved === 'dark') {
+            el.classList.add('dark');
+            el.classList.remove('light');
+          } else if (saved === 'light') {
+            el.classList.add('light');
+            el.classList.remove('dark');
+          } else {
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            el.classList.add(prefersDark ? 'dark' : 'light');
+            el.classList.remove(prefersDark ? 'light' : 'dark');
+          }
+        } catch {}
+      })();
+    </script>
+    <title>Gkin的博客</title>
   </head>
   <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 ease-in-out">
-    <header class="sticky top-0 z-30 border-b border-gray-200 dark:border-gray-800 backdrop-blur-md bg-white/70 text-gray-900 dark:bg-gray-900/70 dark:text-gray-100 transition-colors duration-300 ease-in-out">
+    <header class="site-header sticky top-0 z-30 border-b border-gray-200 dark:border-gray-800 backdrop-blur-md text-gray-900 dark:text-gray-100 transition-colors duration-300 ease-in-out">
       <div class="container mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-2 font-bold text-lg">
           <span class="inline-flex w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 items-center justify-center text-white" style="animation: spin 6s linear infinite;">
@@ -22,17 +55,30 @@ import "../styles/animations.css";
           <span>个人博客</span>
         </a>
         <nav class="flex items-center gap-6 text-sm">
-          <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400">首页</a>
-          <a href="/articles" class="hover:text-blue-600 dark:hover:text-blue-400">文章</a>
-          <a href="/about" class="hover:text-blue-600 dark:hover:text-blue-400">关于</a>
-          <a href="/timeline" class="hover:text-blue-600 dark:hover:text-blue-400">历程</a>
-          <a href="/skills" class="hover:text-blue-600 dark:hover:text-blue-400">技能</a>
-          <a href="/guestbook" class="hover:text-blue-600 dark:hover:text-blue-400">留言板</a>
-          <ThemeToggle client:load />
+          <a href="/" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">首页</a>
+          <a href="/articles" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">文章</a>
+          <a href="/about" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">关于</a>
+          <!-- 历程与技能页面已并入关于页，移除导航入口 -->
+          <a href="/guestbook" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">留言板</a>
+          <!-- 仅在客户端渲染主题切换，避免SSR与客户端主题不一致导致的水合警告与图标错位 -->
+          <ThemeToggle client:only="react" />
         </nav>
       </div>
     </header>
     <ToasterHost client:load />
-    <slot />
+    <main id="page-transition" class="page-transition-enter">
+      <slot />
+    </main>
+    <script>
+      // 页面进入时淡入，减少切换时的闪屏感
+      (function () {
+        const el = document.getElementById('page-transition');
+        if (el) {
+          requestAnimationFrame(() => {
+            el.classList.add('page-transition-enter-active');
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

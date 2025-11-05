@@ -3,24 +3,23 @@ import { useState, useEffect } from 'react';
 type Theme = 'light' | 'dark';
 
 export function useTheme() {
-  // SSR 安全的初始值，避免在服务器环境访问 window/localStorage
-  const [theme, setTheme] = useState<Theme>('light');
-
-  // 首次挂载时读取本地存储与系统偏好
-  useEffect(() => {
-    try {
-      const savedTheme = typeof window !== 'undefined'
-        ? (localStorage.getItem('theme') as Theme | null)
-        : null;
-      const prefersDark = typeof window !== 'undefined'
-        ? window.matchMedia('(prefers-color-scheme: dark)').matches
-        : false;
-      const initial = savedTheme ?? (prefersDark ? 'dark' : 'light');
-      setTheme(initial);
-    } catch {
-      // ignore
+  // 更早计算初始主题：优先读取 documentElement 的 class（由 BaseLayout 的同步脚本提前设置），
+  // 其次读取 localStorage，最后回退到系统偏好。这样可以避免在不同页面出现初始渲染的闪烁或重置。
+  const initialTheme = (): Theme => {
+    if (typeof document !== 'undefined') {
+      const el = document.documentElement;
+      if (el.classList.contains('dark')) return 'dark';
+      if (el.classList.contains('light')) return 'light';
     }
-  }, []);
+    try {
+      const saved = typeof window !== 'undefined' ? (localStorage.getItem('theme') as Theme | null) : null;
+      if (saved) return saved;
+    } catch {}
+    const prefersDark = typeof window !== 'undefined' ? window.matchMedia('(prefers-color-scheme: dark)').matches : false;
+    return prefersDark ? 'dark' : 'light';
+  };
+
+  const [theme, setTheme] = useState<Theme>(initialTheme());
 
   // 当主题变化时，应用到文档并持久化到本地存储
   useEffect(() => {

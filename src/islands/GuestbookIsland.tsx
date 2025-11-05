@@ -84,12 +84,20 @@ const GuestbookIsland: React.FC = () => {
     if (!supabase) return;
     const limit = uid ? 10 : 3;
     setDailyLimit(limit);
-    const query = supabase
+    // 注意：部分网络/代理会拦截 HTTP HEAD 请求，导致浏览器出现 net::ERR_ABORTED。
+    // 为避免该问题，这里不使用 head:true，而是通过常规 GET 获取 count（同时 limit(1) 避免拉取大量数据）。
+    // 如果匿名且还没生成 clientId，先跳过查询并保守显示未使用次数。
+    if (!uid && !cid) {
+      setRemaining(limit);
+      return;
+    }
+    const base = supabase
       .from('guestbook')
-      .select('id', { count: 'exact', head: true })
+      .select('id', { count: 'exact' })
       .gte('created_at', startOfTodayISO())
-      .lt('created_at', startOfTomorrowISO());
-    const final = uid ? query.eq('user_id', uid) : query.eq('client_id', cid ?? '');
+      .lt('created_at', startOfTomorrowISO())
+      .limit(1);
+    const final = uid ? base.eq('user_id', uid) : base.eq('client_id', cid as string);
     const { count, error } = await final;
     if (error) {
       // 出错时不阻断页面，仅提示
@@ -240,7 +248,7 @@ const GuestbookIsland: React.FC = () => {
 
       <ul className="space-y-3">
         {entries.map((it) => (
-          <li key={it.id} className="p-3 rounded border bg-white dark:bg-gray-900 dark:border-gray-700">
+            <li key={it.id} className="p-3 rounded border bg-transparent dark:bg-gray-900 dark:border-gray-700">
             <div className="text-gray-800 dark:text-gray-100">{it.content}</div>
             <div className="text-sm text-gray-500 mt-1">
               {it.author ? it.author : '匿名'} · {new Date(it.created_at).toLocaleString()}

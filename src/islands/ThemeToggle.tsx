@@ -17,13 +17,7 @@ export default function ThemeToggle() {
         backgroundColor: isDark ? '#0f172a' : '#f8fafc', // slate-900 / slate-50
       }}
     >
-      {/* 左侧太阳图标（轨道内淡化显示） */}
-      <i
-        className={
-          'fa-solid fa-sun absolute left-2 text-xs transition-colors duration-300 ' +
-          (isDark ? 'text-slate-400/60' : 'text-yellow-500')
-        }
-      />
+      {/* 移除轨道上的常驻图标，避免出现“月亮压在太阳上”的视觉叠加 */}
 
       {/* 滑块圆钮 */}
       <span
@@ -32,16 +26,20 @@ export default function ThemeToggle() {
           (isDark ? 'translate-x-8' : 'translate-x-1')
         }
         style={{
-          background: 'linear-gradient(135deg, #a78bfa 0%, #c084fc 100%)', // 紫色渐变
+          // 圆钮底色：尽量保持“空白感”，同时不影响对比度
+          background: isDark
+            ? 'linear-gradient(135deg, #a78bfa 0%, #c084fc 100%)' // 深色时偏紫，保证可读性
+            : '#ffffff', // 浅色时白色，突出太阳图标
           boxShadow: isDark
             ? '0 0 0 2px rgba(148,163,184,0.3) inset'
             : '0 0 0 2px rgba(148,163,184,0.2) inset',
         }}
       >
+        {/* 圆钮内图标：浅色显示太阳，深色显示月亮 */}
         <i
           className={
-            'fa-solid fa-moon m-auto text-sm transition-colors duration-300 ' +
-            (isDark ? 'text-slate-900' : 'text-slate-800')
+            'fa-solid m-auto text-sm transition-colors duration-300 ' +
+            (isDark ? 'fa-moon text-slate-900' : 'fa-sun text-yellow-500')
           }
         />
       </span>

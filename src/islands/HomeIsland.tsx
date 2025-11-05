@@ -1,20 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useTheme } from '@/hooks/useTheme';
-import { useToast } from '@/hooks/useToast';
+import ContactIsland from './ContactIsland';
+import SnakeGame from './SnakeGame';
+import LatestArticlesIsland from './LatestArticlesIsland';
 
 export default function HomeIsland() {
-  const { theme, toggleTheme } = useTheme();
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const { toast } = useToast();
   const texts = [
-    '前端开发工程师',
-    'React爱好者',
-    'TypeScript实践者',
-    'UI/UX设计爱好者',
+    '前端开发爱好者',
+    'AI使用探索者',
+    'AI开发爱好者',
     '终身学习者'
   ];
   const typewriterRef = useRef<HTMLSpanElement>(null);
@@ -51,23 +49,12 @@ export default function HomeIsland() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleContactClick = () => {
-    toast('功能开发中，敬请期待！');
-  };
+  // 首页“联系我”改为展示联系板块，不再弹窗
 
-  const skills = [
-    { name: 'React', level: 90 },
-    { name: 'TypeScript', level: 85 },
-    { name: 'Tailwind CSS', level: 88 },
-    { name: 'JavaScript', level: 92 },
-    { name: 'HTML/CSS', level: 95 },
-    { name: 'Node.js', level: 75 },
-    { name: 'Git', level: 80 },
-    { name: 'UI/UX Design', level: 70 },
-  ];
+  // 首页恢复为简洁的介绍 + 联系我，不在首页展示“历程”和“技能”板块
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-800'} transition-colors duration-300`}>
+    <div className={"min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300"}>
       <motion.div className="fixed top-0 left-0 h-1 bg-blue-500 z-50" style={{ width: `${scrollProgress}%` }} />
 
       {/**
@@ -76,12 +63,16 @@ export default function HomeIsland() {
        * 如需在全局导航中保留主题切换，可在 BaseLayout 中挂载一个轻量的 React 岛组件实现。
        */}
 
-      <section className="py-20 md:py-32">
-        <div className="container mx-auto px-4">
+      <section className="py-20 md:py-32 relative overflow-hidden">
+        {/* 背景：贪吃蛇作为趣味动效，轻微模糊与低不透明度在组件内处理 */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <SnakeGame titleHidden={true} backgroundMode={true} />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                你好，我是<span className="text-blue-500">开发者</span>
+                你好，我是<span className="text-blue-500">重度AI爱好者</span>
               </h1>
               <p className="text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300">
                 我是一名
@@ -94,7 +85,7 @@ export default function HomeIsland() {
                 <motion.a href="/articles" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg shadow-lg shadow-blue-500/20 transition-all">
                   浏览我的文章
                 </motion.a>
-                <motion.a href="/about" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-6 py-3 bg-gray-2 00 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 font-medium rounded-lg transition-all">
+                <motion.a href="/about" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 font-medium rounded-lg transition-all">
                   了解更多
                 </motion.a>
               </div>
@@ -103,25 +94,29 @@ export default function HomeIsland() {
         </div>
       </section>
 
-      <section className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} py-16`}>
+      {/* 游戏区暂时移除；背景为贪吃蛇，俄罗斯方块与其他小游戏不展示 */}
+
+      {/* 最新文章预览：默认透明，避免深色模式初次渲染闪白 */}
+      <section className="py-12 bg-transparent dark:bg-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">我的技能</h2>
-          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            {skills.map((skill, index) => (
-              <motion.div key={skill.name} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.1, duration: 0.5 }} whileHover={{ scale: 1.1, boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)' }} className="px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-sm font-medium flex items-center gap-2 transition-all">
-                <span>{skill.name}</span>
-                <div className="w-16 h-1 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full" style={{ width: `${skill.level}%` }} />
-                </div>
-              </motion.div>
-            ))}
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">最新文章</h2>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">最近发布的内容预览</p>
+            </div>
+            <LatestArticlesIsland />
           </div>
         </div>
       </section>
 
-      <section className="py-12">
-        <div className="container mx-auto px-4 text-center">
-          <button onClick={handleContactClick} className="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-all">联系我</button>
+      {/* 联系我板块 */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">联系我</h2>
+            <p className="mt-2 text-gray-600 dark:text-gray-300">如果你有任何问题或合作意向，欢迎随时联系我！</p>
+          </div>
+          <ContactIsland />
         </div>
       </section>
     </div>

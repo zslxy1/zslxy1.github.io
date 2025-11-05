@@ -60,7 +60,7 @@ description: 记录我的学习和工作经历
 
 <div className="mt-12 text-center">
   <motion.a
-    href="/skills"
+    href="/about"
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
     className="inline-block px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg shadow-lg shadow-blue-500/20 transition-all"

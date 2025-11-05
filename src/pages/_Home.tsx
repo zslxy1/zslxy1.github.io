@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/useTheme';
-import { useToast } from '@/hooks/useToast';
+import SocialLinksRow from '@/islands/SocialLinksRow';
 
 // 技能数据
 const skills = [
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const { toast } = useToast();
+ 
   
   const texts = [
     '前端开发工程师',
@@ -125,10 +125,10 @@ const Home: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // 处理联系按钮点击
-  const handleContactClick = () => {
-    toast('功能开发中，敬请期待！');
-  };
+// 处理联系按钮点击（暂不使用，保留占位）
+// const handleContactClick = () => {
+//   // 这里可以加入其他交互逻辑
+// };
   
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-800'} transition-colors duration-300`}>
@@ -338,48 +338,7 @@ const Home: React.FC = () => {
             <p className="text-gray-600 dark:text-gray-300 mb-8">
               如果你有任何问题或合作意向，欢迎随时联系我！
             </p>
-            <div className="flex justify-center gap-6">
-              <motion.a
-                href="#"
-                onClick={handleContactClick}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-                aria-label="GitHub"
-              >
-                <i className="fa-brands fa-github text-xl"></i>
-              </motion.a>
-              <motion.a
-                href="#"
-                onClick={handleContactClick}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-                aria-label="Twitter"
-              >
-                <i className="fa-brands fa-twitter text-xl"></i>
-              </motion.a>
-              <motion.a
-                href="#"
-                onClick={handleContactClick}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <i className="fa-brands fa-linkedin text-xl"></i>
-              </motion.a>
-              <motion.a
-                href="mailto:example@email.com"
-                onClick={handleContactClick}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-                aria-label="Email"
-              >
-                <i className="fa-solid fa-envelope text-xl"></i>
-              </motion.a>
-            </div>
+            <SocialLinksRow gapClass="gap-6" />
           </div>
         </div>
       </section>

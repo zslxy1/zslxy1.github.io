@@ -85,3 +85,90 @@ pre {
   background-color: #3B82F6;
   color: white;
 }
+
+/* Markdown 浅色模式下的对比度优化 */
+.markdown-body {
+  background: transparent !important;
+  color: #1f2937; /* text-gray-800 */
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: #111827; /* text-gray-900 */
+}
+
+.markdown-body a {
+  color: #2563eb; /* text-blue-600 */
+}
+
+.markdown-body code,
+.markdown-body pre {
+  background-color: #f8fafc !important; /* bg-gray-50 */
+  color: #111827 !important; /* text-gray-900 */
+}
+
+.markdown-body pre code {
+  background: transparent !important;
+}
+
+.markdown-body blockquote {
+  color: #374151; /* text-gray-700 */
+  border-left-color: #e5e7eb; /* border-gray-200 */
+}
+
+.markdown-body table {
+  color: #1f2937; /* text-gray-800 */
+}
+
+.markdown-body hr {
+  border-color: #e5e7eb; /* border-gray-200 */
+}
+
+/* Markdown 渲染的深色模式优化，避免与页面整体风格割裂 */
+.markdown-body {
+  background: transparent !important;
+}
+
+.dark .markdown-body {
+  color: #e5e7eb; /* text-gray-200 */
+}
+
+.dark .markdown-body h1,
+.dark .markdown-body h2,
+.dark .markdown-body h3,
+.dark .markdown-body h4,
+.dark .markdown-body h5,
+.dark .markdown-body h6 {
+  color: #f3f4f6; /* text-gray-100 */
+}
+
+.dark .markdown-body a {
+  color: #60a5fa; /* text-blue-400 */
+}
+
+.dark .markdown-body code,
+.dark .markdown-body pre {
+  background-color: #111827 !important; /* bg-gray-900 */
+  color: #e5e7eb !important; /* text-gray-200 */
+}
+
+.dark .markdown-body pre code {
+  background: transparent !important;
+}
+
+.dark .markdown-body blockquote {
+  color: #d1d5db; /* text-gray-300 */
+  border-left-color: #374151; /* border-gray-700 */
+}
+
+.dark .markdown-body table {
+  color: #e5e7eb; /* text-gray-200 */
+}
+
+.dark .markdown-body hr {
+  border-color: #374151; /* border-gray-700 */
+}

@@ -1,20 +1,15 @@
 import { motion } from 'framer-motion';
-import { useTheme } from '@/hooks/useTheme';
 
 const skills = [
-  { name: 'React', level: 90 },
-  { name: 'TypeScript', level: 85 },
-  { name: 'Tailwind CSS', level: 88 },
-  { name: 'JavaScript', level: 92 },
-  { name: 'HTML/CSS', level: 95 },
-  { name: 'Node.js', level: 75 },
-  { name: 'Git', level: 80 },
-  { name: 'UI/UX Design', level: 70 },
+  { name: 'HTML/CSS', level: 50 },
+  { name: 'Node.js', level: 50 },
+  { name: 'JavaScript', level: 50 },
+  { name: 'Git', level: 50 },
+  { name: 'Trae', level: 50 },
+  { name: 'Cursor', level: 50 },
 ];
 
 export default function SkillsIsland() {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
   return (
     <div className="container mx-auto px-4">
@@ -67,13 +62,13 @@ export default function SkillsIsland() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.08 }}
-            className={(isDark ? 'bg-gray-800' : 'bg-gray-50') + ' p-4 rounded-lg border ' + (isDark ? 'border-gray-700' : 'border-gray-200')}
+            className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700"
           >
             <div className="flex justify-between mb-2">
               <span className="font-medium">{s.name}</span>
               <span className="text-sm text-gray-500">{s.level}%</span>
             </div>
-            <div className={(isDark ? 'bg-gray-700' : 'bg-gray-200') + ' w-full rounded-full h-2 overflow-hidden'}>
+            <div className="bg-gray-200 dark:bg-gray-700 w-full rounded-full h-2 overflow-hidden">
               <div
                 className="h-2 rounded-full"
                 style={{
