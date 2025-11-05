@@ -1,0 +1,1 @@
+import{r as a}from"./index.RYns6xqu.js";import{t}from"./index.lWn6zzYb.js";function f(){const r=a.useCallback((s,o)=>{t(s,o)},[]),c=a.useCallback((s,o)=>{t.success(s,o)},[]),n=a.useCallback((s,o)=>{t.error(s,o)},[]),e=a.useCallback((s,o)=>{t.info(s,o)},[]),u=a.useCallback((s,o)=>{t.warning(s,o)},[]);return{toast:r,success:c,error:n,info:e,warning:u}}export{f as u};
