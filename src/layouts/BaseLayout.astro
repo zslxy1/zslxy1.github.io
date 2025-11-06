@@ -1,5 +1,6 @@
 ---
 import { ThemeToggle, ToasterHost } from "@/features/common";
+import headImg from "../image_data/head.png";
 import "../index.css";
 import "../styles/custom.css";
 import "../styles/animations.css";
@@ -48,9 +49,12 @@ import "../styles/animations.css";
     <header class="site-header sticky top-0 z-30 border-b border-gray-200 dark:border-gray-800 backdrop-blur-md text-gray-900 dark:text-white transition-colors duration-300 ease-in-out">
       <div class="container mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-2 font-bold text-lg">
-          <span class="inline-flex w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 items-center justify-center text-white" style="animation: spin 6s linear infinite;">
-            <i class="fa-solid fa-code"></i>
-          </span>
+          <img
+            id="site-logo"
+            src={headImg.src}
+            alt="头像"
+            class="w-8 h-8 rounded-full object-cover ring-2 ring-blue-500/60 logo-spin"
+          />
           <span>个人博客</span>
         </a>
         <nav class="flex items-center gap-6 text-sm">
@@ -69,6 +73,17 @@ import "../styles/animations.css";
       <slot />
     </main>
     <script>
+      // 允许用户点击 Logo 切换旋转/暂停
+      (function () {
+        const logo = document.getElementById('site-logo');
+        if (logo) {
+          logo.title = '点击暂停/恢复旋转';
+          logo.style.cursor = 'pointer';
+          logo.addEventListener('click', () => {
+            logo.classList.toggle('logo-paused');
+          });
+        }
+      })();
       // 页面进入时淡入，减少切换时的闪屏感
       (function () {
         const el = document.getElementById('page-transition');

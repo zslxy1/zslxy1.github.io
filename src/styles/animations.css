@@ -87,3 +87,16 @@
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+/* 站点 Logo 旋转（可暂停） */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.logo-spin {
+  animation: spin 6s linear infinite;
+}
+
+.logo-paused {
+  animation-play-state: paused;
+}
