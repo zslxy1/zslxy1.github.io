@@ -405,3 +405,12 @@ body.dark .text-gray-200 { color: #ffffff !important; }
 /* 次要信息在暗色下也提高对比度，但略低于纯白以保留层次 */
 html.dark .text-gray-500,
 body.dark .text-gray-500 { color: #e5e7eb !important; }
+
+/* 兜底：确保暗色主题下 Markdown 容器内所有文本默认都是纯白（避免被其他全局类覆盖） */
+html.dark .markdown-body *,
+body.dark .markdown-body * {
+  color: #ffffff !important;
+}
+/* 重新声明链接颜色，保证在兜底规则之后仍保持更亮的蓝色 */
+html.dark .markdown-body a,
+body.dark .markdown-body a { color: #93c5fd !important; }
