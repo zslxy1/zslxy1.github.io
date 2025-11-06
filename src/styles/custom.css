@@ -394,3 +394,14 @@ body:not(.dark) .markdown-body hr {
 .dark .markdown-body th,
 .dark .markdown-body td { border-color: #374151; }
 .dark .markdown-body hr { border-top-color: #374151; }
+
+/* 全站暗色主题：提升默认文字对比度，避免过灰导致难以阅读 */
+html.dark .text-gray-300,
+body.dark .text-gray-300 { color: #ffffff !important; }
+html.dark .text-gray-400,
+body.dark .text-gray-400 { color: #ffffff !important; }
+html.dark .text-gray-200,
+body.dark .text-gray-200 { color: #ffffff !important; }
+/* 次要信息在暗色下也提高对比度，但略低于纯白以保留层次 */
+html.dark .text-gray-500,
+body.dark .text-gray-500 { color: #e5e7eb !important; }
