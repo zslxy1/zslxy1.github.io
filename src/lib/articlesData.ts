@@ -27,10 +27,10 @@ export const articlesData: Article[] = [
     id: 2,
     title: '我的个人博客项目：Astro + React + Tailwind 构建与发布',
     excerpt:
-      '介绍本博客项目的技术栈、页面结构、主题系统与开发/部署流程，并开源可复用的结构。',
+      '介绍本博客项目的技术栈、页面结构、主题系统与 Supabase 数据层、以及 GitHub Actions 自动部署；并开源可复用的结构。',
     date: '2025-11-05',
     category: '前端开发',
-    tags: ['Astro', 'React', 'TailwindCSS', 'Vite'],
+    tags: ['Astro', 'React', 'TailwindCSS', 'Vite', 'Supabase', 'GitHub Actions'],
     imageUrl:
       'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
   },
