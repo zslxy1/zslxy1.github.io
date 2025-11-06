@@ -187,8 +187,8 @@ await supabase.from('guestbook').insert({ content: '你好～', author: '我', c
 
 \`\`\`yaml
 env:
-  PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
-  PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+  PUBLIC_SUPABASE_URL: \${{ secrets.PUBLIC_SUPABASE_URL }}
+  PUBLIC_SUPABASE_ANON_KEY: \${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
 \`\`\`
 
 > 提示：请在仓库 Settings → Secrets 中配置以上两个变量；anon key 仅用于前端公共访问，敏感写入需通过 RLS 与触发器控制。
