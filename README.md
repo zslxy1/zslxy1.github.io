@@ -230,6 +230,12 @@ npm update
 - `src/features/contact`：联系页 islands（ContactIsland、ContactHeaderIsland）
 - `src/features/common`：通用组件（ThemeToggle、ToasterHost、SocialLinksRow）
 
+## 开发日志记录
+
+项目的迭代记录、需求与改动时间线请查看：
+
+- docs/DEVLOG.md
+
 说明：页面层优先从 `src/features/*` 导入命名导出，统一管理模块边界与依赖。
 
 ### 示例说明（examples/）
