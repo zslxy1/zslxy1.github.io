@@ -221,5 +221,20 @@ npm update
 - 缓存配置：在`astro.config.mjs`中配置适当的缓存策略
 - 代码分割：合理组织代码，避免不必要的依赖
 
+### 模块说明（features/）
+- `src/features/home`：首页 islands 聚合导出（如 HomeIsland、LatestArticlesIsland）
+- `src/features/articles`：文章列表 islands 与数据导出（ArticlesIsland、articlesData）
+- `src/features/article-detail`：文章详情 islands 与内容导出（ArticleDetailIsland、articlesContent）
+- `src/features/about`：关于页 islands（AboutIsland、SkillsIsland）
+- `src/features/guestbook`：留言板 islands（GuestbookIsland、GuestbookHeaderIsland）
+- `src/features/contact`：联系页 islands（ContactIsland、ContactHeaderIsland）
+- `src/features/common`：通用组件（ThemeToggle、ToasterHost、SocialLinksRow）
+
+说明：页面层优先从 `src/features/*` 导入命名导出，统一管理模块边界与依赖。
+
+### 示例说明（examples/）
+- `examples/react-spa/`：历史 React SPA 示例入口（index.html、main.tsx、App.tsx 及 pages）。已与 Astro 主站隔离，避免影响预览与构建。
+- `examples/unused/`：暂未使用的组件归档（如 PageTransition、Empty），保留以便后续参考或复用。
+
 ## License
 MIT

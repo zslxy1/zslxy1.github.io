@@ -1,7 +1,7 @@
 ---
-import ArticleDetailIsland from "../../islands/ArticleDetailIsland";
+import { ArticleDetailIsland } from "@/features/article-detail";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { articlesData } from "../../lib/articlesData";
+import { articlesData } from "@/features/articles";
 const { id } = Astro.params;
 
 // 为确保 /articles/:id 路由可访问，基于本地数据生成静态路径

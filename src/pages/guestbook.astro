@@ -1,8 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import GuestbookIsland from "../islands/GuestbookIsland.tsx";
-import GuestbookHeaderIsland from "../islands/GuestbookHeaderIsland";
-import SocialLinksRow from "../islands/SocialLinksRow.tsx";
+import { GuestbookIsland, GuestbookHeaderIsland } from "@/features/guestbook";
+import { SocialLinksRow } from "@/features/common";
 ---
 <BaseLayout>
   <section class="relative py-10 transition-colors duration-300">
