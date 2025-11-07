@@ -3,6 +3,7 @@ import { getLatest } from '@/lib/articlesData';
 // 使用 ?url 获取静态资源最终 URL，避免个别环境下图片不显示
 import yoloImgUrl from '@/image_data/YOLO_cs2.jpg?url';
 import webBlogUrl from '@/image_data/web_blog.png?url';
+import vocalImgUrl from '@/image_data/Vocal_Isolation.png?url';
 
 export default function LatestArticlesIsland({ count = 3 }: { count?: number }) {
   const latest = getLatest(count);
@@ -13,7 +14,7 @@ export default function LatestArticlesIsland({ count = 3 }: { count?: number }) 
           {latest.map((article, idx) => (
   <motion.a key={article.id} href={`/articles/${article.id}`} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: idx * 0.05 }} className="rounded-xl overflow-hidden shadow-sm bg-transparent border border-gray-200 dark:bg-gray-800 dark:border-gray-700 card-hover">
               <img
-                src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.imageUrl}
+                src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.id === 3 ? vocalImgUrl : article.imageUrl}
                 alt={article.title}
                 className="w-full h-40 object-cover"
                 loading="lazy"

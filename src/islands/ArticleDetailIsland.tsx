@@ -8,6 +8,7 @@ import { articlesContent } from '@/lib/articlesContent';
 // 使用 ?url 以获得最终 URL，避免图片无法显示
 import yoloImgUrl from '@/image_data/YOLO_cs2.jpg?url';
 import webBlogUrl from '@/image_data/web_blog.png?url';
+import vocalImgUrl from '@/image_data/Vocal_Isolation.png?url';
 import { marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import prism from 'prismjs';
@@ -123,7 +124,7 @@ export default function ArticleDetailIsland({ id }: { id: string }) {
         {/* 仅文章内容，无侧栏时居中展示 */}
         <div className="container mx-auto px-4">
           <article className="max-w-3xl mx-auto">
-            <img src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.imageUrl} alt={article.title} className="w-full h-56 object-cover rounded-xl mb-6" />
+            <img src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.id === 3 ? vocalImgUrl : article.imageUrl} alt={article.title} className="w-full h-56 object-cover rounded-xl mb-6" />
             <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
             <p className="text-sm text-gray-500 dark:text-white mb-4">
               发布于：{new Date(article.date).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })}
