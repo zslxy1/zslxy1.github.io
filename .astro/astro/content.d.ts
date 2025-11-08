@@ -162,6 +162,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"2025-11-08-suno-music-model.md": {
+	id: "2025-11-08-suno-music-model.md";
+  slug: "2025-11-08-suno-music-model";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 };
 "docs": {
 "about.md": {
