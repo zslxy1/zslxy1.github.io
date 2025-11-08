@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import headImg from "../image_data/head.png";
 import SkillsIsland from './SkillsIsland';
 import SocialLinksRow from './SocialLinksRow';
 
@@ -107,7 +108,7 @@ export default function AboutIsland() {
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="max-w-4xl mx-auto p-8 rounded-2xl shadow-lg bg-transparent dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-500">
-                <img src="https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Software%20developer%20portrait%2C%20professional%20headshot&sign=8d5826776cfe3271f8204e531ed81666" alt={aboutData.name} className="w-full h-full object-cover" />
+                <img src={headImg.src} alt={aboutData.name} className="w-full h-full object-cover" />
               </div>
               <div className="text-center md:text-left">
                 <h2 className="text-2xl font-bold mb-1">{aboutData.name}</h2>

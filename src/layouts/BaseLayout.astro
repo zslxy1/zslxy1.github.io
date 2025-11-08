@@ -14,10 +14,10 @@ import "../styles/animations.css";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
     <!-- 提前应用用户主题，避免页面切换时主题被重置或出现闪烁 -->
     <style>
-      /* 预设页面背景，避免在主题脚本执行前出现白屏闪烁 */
-      html, body { background-color: #111827; }
-      @media (prefers-color-scheme: light) {
-        html, body { background-color: #f9fafb; }
+      /* 预设页面背景，避免在主题脚本执行前出现闪烁；默认使用浅色主题 */
+      html, body { background-color: #f9fafb; }
+      @media (prefers-color-scheme: dark) {
+        html, body { background-color: #111827; }
       }
       /* 让头部在未确定主题前保持透明，主题确定后再应用对应背景 */
       .site-header { background-color: transparent; }
@@ -36,9 +36,9 @@ import "../styles/animations.css";
             el.classList.add('light');
             el.classList.remove('dark');
           } else {
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            el.classList.add(prefersDark ? 'dark' : 'light');
-            el.classList.remove(prefersDark ? 'light' : 'dark');
+            // 默认使用浅色主题（首次访问）
+            el.classList.add('light');
+            el.classList.remove('dark');
           }
         } catch {}
       })();
