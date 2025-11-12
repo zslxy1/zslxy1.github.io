@@ -21,13 +21,9 @@
 - 主页：https://zslxy1.github.io/
 - 留言板：https://zslxy1.github.io/guestbook
 
-## 分支与状态
+## 分支与发布
 
-- `source`（远端）：主源码分支，包含 framer-motion 动画实现
-- `css-animations`（远端）：纯 CSS 动画变体，实现更轻的入场过渡
-- `main`（远端：zslxy1.github.io）：用于 GitHub Pages 发布的构建产物（`dist`）
-
-说明：为了保持线上发布稳定，`main` 分支只存部署后的静态文件。源码存放在 `source` 或 `css-animations` 分支。
+- `main`：源码分支（唯一分支）。使用 GitHub Actions 从该分支构建并发布到 GitHub Pages。
 
 ## 本地开发
 
@@ -45,17 +41,10 @@ npm run build
 构建输出目录：`dist/`
 
 发布方式：
-- 手动：将 `dist/` 推送到 `zslxy1.github.io` 仓库的 `main`
-- 自动（推荐）：使用仓库内的 GitHub Pages 工作流（`.github/workflows/pages.yml`）从源码分支构建并发布
+- 自动：使用仓库内的 GitHub Pages 工作流（`.github/workflows/pages.yml`）从 `main` 构建并发布
 
-## 切换到不同实现
-
-```bash
-# 拉取源码分支
-git clone -b source https://github.com/zslxy1/zslxy1.github.io.git
-# 或拉取 CSS 动画版本
-git clone -b css-animations https://github.com/zslxy1/zslxy1.github.io.git
-```
+## 说明
+- 历史上的 `source` 与 `css-animations` 分支已合并/删除，当前仅保留 `main` 作为源码与发布入口。
 
 本地开发
 1. 安装依赖：
