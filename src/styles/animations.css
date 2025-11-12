@@ -1,13 +1,13 @@
 /* 页面过渡动画 */
 .page-transition-enter {
-  opacity: 0;
-  transform: translateY(10px);
+  opacity: 1;
+  transform: translateY(4px);
 }
 
 .page-transition-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 300ms, transform 300ms;
+  transition: transform 180ms;
 }
 
 .page-transition-exit {
@@ -15,9 +15,30 @@
 }
 
 .page-transition-exit-active {
-  opacity: 0;
-  transition: opacity 300ms;
+  opacity: 0.98;
+  transition: opacity 120ms;
 }
+
+#page-transition {
+  min-height: 100vh;
+  will-change: opacity, transform;
+  background-color: transparent;
+}
+html.light #page-transition { background-color: #f9fafb; }
+html.dark #page-transition { background-color: #111827; }
+
+.fade-in { animation: fadeIn 300ms ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide-up { animation: slideUp 450ms ease-out both; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide-left { animation: slideLeft 450ms ease-out both; }
+@keyframes slideLeft { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+
+.slide-right { animation: slideRight 450ms ease-out both; }
+@keyframes slideRight { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+
 
 /* 滚动进度条 */
 .progress-container {

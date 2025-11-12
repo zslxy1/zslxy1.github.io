@@ -10,24 +10,12 @@ import "../styles/animations.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <!-- Favicon：使用本地 head.png 作为网站图标 -->
     <link rel="icon" type="image/png" href={headImg.src} sizes="32x32" />
     <link rel="shortcut icon" type="image/png" href={headImg.src} />
     <link rel="apple-touch-icon" href={headImg.src} />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
-    <!-- 提前应用用户主题，避免页面切换时主题被重置或出现闪烁 -->
-    <style>
-      /* 预设页面背景，避免在主题脚本执行前出现闪烁；默认使用浅色主题 */
-      html, body { background-color: #f9fafb; }
-      @media (prefers-color-scheme: dark) {
-        html, body { background-color: #111827; }
-      }
-      /* 让头部在未确定主题前保持透明，主题确定后再应用对应背景 */
-      .site-header { background-color: transparent; }
-      html.light .site-header { background-color: rgba(255,255,255,0.70); }
-      html.dark .site-header { background-color: rgba(17,24,39,0.70); }
-    </style>
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" onload="this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" /></noscript>
     <script>
       (() => {
         try {
@@ -40,16 +28,31 @@ import "../styles/animations.css";
             el.classList.add('light');
             el.classList.remove('dark');
           } else {
-            // 默认使用浅色主题（首次访问）
             el.classList.add('light');
             el.classList.remove('dark');
           }
         } catch {}
       })();
     </script>
+    <meta name="theme-color" content="#f9fafb" />
+    <script>
+      (() => {
+        const m = document.querySelector('meta[name="theme-color"]');
+        const set = () => m && m.setAttribute('content', document.documentElement.classList.contains('dark') ? '#111827' : '#f9fafb');
+        set();
+        new MutationObserver(set).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+      })();
+    </script>
+    <style>
+      html.light, html.light body { background-color: #f9fafb; }
+      html.dark, html.dark body { background-color: #111827; }
+      .site-header { background-color: transparent; }
+      html.light .site-header { background-color: rgba(255,255,255,0.70); }
+      html.dark .site-header { background-color: rgba(17,24,39,0.70); }
+    </style>
     <title>Gkin的博客</title>
   </head>
-  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-white transition-colors duration-300 ease-in-out">
+  <body class="text-gray-800 dark:text-white transition-colors duration-300 ease-in-out">
     <header class="site-header sticky top-0 z-30 border-b border-gray-200 dark:border-gray-800 backdrop-blur-md text-gray-900 dark:text-white transition-colors duration-300 ease-in-out">
       <div class="container mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-2 font-bold text-lg">
@@ -62,19 +65,18 @@ import "../styles/animations.css";
           <span>个人博客</span>
         </a>
         <nav class="flex items-center gap-6 text-sm">
-          <a href="/" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">首页</a>
-          <a href="/articles" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">文章</a>
-          <a href="/ai-features" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">AI功能</a>
-          <a href="/about" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">关于</a>
+          <a href={import.meta.env.BASE_URL} astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">首页</a>
+          <a href={`${import.meta.env.BASE_URL}articles`} astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">文章</a>
+          <a href={`${import.meta.env.BASE_URL}about`} astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">关于</a>
           <!-- 历程与技能页面已并入关于页，移除导航入口 -->
-          <a href="/guestbook" astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">留言板</a>
+          <a href={`${import.meta.env.BASE_URL}guestbook`} astro:prefetch class="hover:text-blue-600 dark:hover:text-blue-400">留言板</a>
           <!-- 仅在客户端渲染主题切换，避免SSR与客户端主题不一致导致的水合警告与图标错位 -->
           <ThemeToggle client:only="react" />
         </nav>
       </div>
     </header>
     <ToasterHost client:load />
-    <main id="page-transition" class="page-transition-enter">
+    <main id="page-transition">
       <slot />
     </main>
     <script>
@@ -98,6 +100,7 @@ import "../styles/animations.css";
           });
         }
       })();
+      
     </script>
   </body>
 </html>

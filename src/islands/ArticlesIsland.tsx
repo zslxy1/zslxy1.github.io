@@ -21,14 +21,20 @@ export default function ArticlesIsland() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const currentScroll = window.scrollY;
-      const progress = (currentScroll / totalScroll) * 100;
-      setScrollProgress(progress);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const current = window.scrollY;
+        setScrollProgress(total > 0 ? (current / total) * 100 : 0);
+        ticking = false;
+      });
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll as EventListener);
   }, []);
 
   useEffect(() => {
@@ -99,13 +105,15 @@ export default function ArticlesIsland() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredArticles.map(article => (
-        <motion.a key={article.id} href={`/articles/${article.id}`} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-xl overflow-hidden shadow-sm bg-transparent border border-gray-200 dark:bg-gray-800 dark:border-gray-700 card-hover">
+                <motion.a key={article.id} href={`/articles/${article.id}`} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-xl overflow-hidden shadow-sm bg-transparent border border-gray-200 dark:bg-gray-800 dark:border-gray-700 card-hover">
                   <img
                     src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.id === 3 ? vocalImgUrl : article.id === 4 ? sunoImgUrl : article.imageUrl}
                     alt={article.title}
                     className="w-full h-40 object-cover"
                     loading="lazy"
                     decoding="async"
+                    width={16}
+                    height={9}
                   />
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-2">
