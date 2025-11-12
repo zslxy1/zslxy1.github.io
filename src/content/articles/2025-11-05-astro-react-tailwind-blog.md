@@ -1,10 +1,10 @@
 ---
 id: 2
 title: "我的个人博客项目：Astro + React + Tailwind 构建与发布"
-description: "采用 Astro + React Islands + TailwindCSS 的个人博客架构，强调内容为王与轻交互，集成 Supabase 与 GitHub Actions。"
+description: "采用 Astro + React Islands + TailwindCSS 的个人博客架构；main 作为源码分支，使用 GitHub Actions（pages.yml）自动发布到 GitHub Pages。"
 date: "2025-11-05"
 category: "Web 开发"
-tags: ["Astro","React","Tailwind","Supabase"]
+tags: ["Astro","React","Tailwind","Supabase","GitHub Pages","Actions"]
 image: "https://images.unsplash.com/photo-1526378722781-01b034aa3b69?auto=format&fit=crop&w=1200&q=80"
 ---
 
@@ -18,7 +18,7 @@ image: "https://images.unsplash.com/photo-1526378722781-01b034aa3b69?auto=format
 - 架构：Astro SSR/静态输出 + React Islands + TailwindCSS + Supabase
 - 目标：首屏快、可读性强、主题一致、易扩展
 - 内容组织：元数据与 Markdown 分离；React 组件渲染 GitHub 风格 Markdown + Prism 代码高亮
-- 部署：推送到 main 即触发 CI 构建与发布（见 .github/workflows/deploy.yml）
+- 部署：推送到 main 即触发 CI 构建与发布（见 .github/workflows/pages.yml）
 
 ## 二、核心技术栈与选型
 - Astro：仅在必要的岛组件进行客户端激活，降低 JS 体积与水合成本
@@ -103,19 +103,21 @@ await supabase.from('guestbook').insert({ content: '你好～', author: '我', c
 
 > 注意：匿名插入依赖 client_id，前端会在首次进入页面生成并保存在 localStorage。
 
-## 七、自动化部署（GitHub Actions）
-部署流程位于 `.github/workflows/deploy.yml`：
+## 七、自动化部署（GitHub Actions / GitHub Pages）
+部署流程位于 `.github/workflows/pages.yml`：
 - 触发：推送到 main 分支
-- 步骤：checkout → 安装依赖 → 构建（`npm run build`）→ 发布到 gh-pages
-- 环境变量：在构建步骤注入 `PUBLIC_SUPABASE_URL` 与 `PUBLIC_SUPABASE_ANON_KEY`，用于静态生成阶段的配置
+- 步骤：checkout → 安装依赖（`npm ci`）→ 构建（`npm run build`）→ 上传构建产物 → `deploy-pages` 发布到 GitHub Pages
+- Pages 设置：在仓库 Settings → Pages 中将 Source 选择为 “GitHub Actions”
+
+如需连接 Supabase，可在仓库 Secrets 中配置：
 
 ```
 env:
-  PUBLIC_SUPABASE_URL: \\${{ secrets.PUBLIC_SUPABASE_URL }}
-  PUBLIC_SUPABASE_ANON_KEY: \\${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+  PUBLIC_SUPABASE_URL: \${{ secrets.PUBLIC_SUPABASE_URL }}
+  PUBLIC_SUPABASE_ANON_KEY: \${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
 ```
 
-> 提示：请在仓库 Settings → Secrets 中配置以上两个变量；anon key 仅用于前端公共访问，敏感写入需通过 RLS 与触发器控制。
+> 提示：anon key 仅用于前端公共访问，敏感写入需通过 RLS 与触发器控制；main 分支作为唯一源码分支，CI 将直接从 main 构建并发布。
 
 ## 八、开发与构建
 ### 本地运行
