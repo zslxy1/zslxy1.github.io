@@ -20,7 +20,7 @@ type ParsedMd = {
 };
 
 // 读取所有 Markdown（作为原始字符串）
-const mdFiles = import.meta.glob('/src/content/articles/*.md', { as: 'raw', eager: true }) as Record<string, string>;
+const mdFiles = import.meta.glob('/src/content/articles/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
 function parseFrontmatter(raw: string): ParsedMd {
   const sep = '---';
