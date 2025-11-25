@@ -169,6 +169,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"2025-11-25-veo31-google-flow-video.md": {
+	id: "2025-11-25-veo31-google-flow-video.md";
+  slug: "2025-11-25-veo31-google-flow-video";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 };
 "docs": {
 "about.md": {
