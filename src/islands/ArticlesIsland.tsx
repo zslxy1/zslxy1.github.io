@@ -9,9 +9,15 @@ import webBlogUrl from '@/image_data/web_blog.png?url';
 import vocalImgUrl from '@/image_data/Vocal_Isolation.png?url';
 import sunoImgUrl from '@/image_data/Suno.png?url';
 import flowImgUrl from '@/image_data/flow.png?url';
+import obsImgUrl from '@/image_data/obs.svg?url';
 
 const categories = [...new Set(articlesData.map(article => article.category))];
-const allTags = [...new Set(articlesData.flatMap(article => article.tags))];
+const allTagCounts = new Map<string, number>();
+articlesData.forEach(a => a.tags.forEach(t => allTagCounts.set(t, (allTagCounts.get(t) ?? 0) + 1)));
+const allTags = Array.from(allTagCounts.entries())
+  .sort((a, b) => (b[1] - a[1]) || a[0].localeCompare(b[0]))
+  .slice(0, 12)
+  .map(([t]) => t);
 
 export default function ArticlesIsland() {
   const { toast } = useToast();
@@ -108,7 +114,7 @@ export default function ArticlesIsland() {
               {filteredArticles.map(article => (
                 <motion.a key={article.id} href={`/articles/${article.id}`} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-xl overflow-hidden shadow-sm bg-transparent border border-gray-200 dark:bg-gray-800 dark:border-gray-700 card-hover">
                   <img
-                    src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.id === 3 ? vocalImgUrl : article.id === 4 ? sunoImgUrl : article.id === 5 ? flowImgUrl : article.imageUrl}
+                    src={article.id === 1 ? yoloImgUrl : article.id === 2 ? webBlogUrl : article.id === 3 ? vocalImgUrl : article.id === 4 ? sunoImgUrl : article.id === 5 ? flowImgUrl : article.id === 6 ? obsImgUrl : article.imageUrl}
                     alt={article.title}
                     className="w-full h-40 object-cover"
                     loading="lazy"
@@ -131,7 +137,7 @@ export default function ArticlesIsland() {
                     <h3 className="text-lg font-bold mb-2">{article.title}</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{article.excerpt}</p>
                     <div className="flex flex-wrap gap-2">
-                      {article.tags.map(tag => (
+                      {article.tags.slice(0, 3).map(tag => (
                         <span key={tag} className="px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-xs">#{tag}</span>
                       ))}
                     </div>

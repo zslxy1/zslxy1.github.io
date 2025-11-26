@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <rect x="200" y="120" width="800" height="450" rx="24" fill="#0f172a" stroke="#334155" stroke-width="6"/>
+  <rect x="230" y="150" width="740" height="390" rx="16" fill="#020617"/>
+  <circle cx="600" cy="345" r="140" fill="#0b1220" stroke="#3b82f6" stroke-width="8"/>
+  <path d="M600 245c40 0 60 25 60 55 0 30-20 50-50 55 10 20 10 40-10 55-30 25-75 10-85-25" fill="none" stroke="#93c5fd" stroke-width="10" stroke-linecap="round"/>
+  <rect x="460" y="590" width="280" height="16" rx="8" fill="#334155"/>
+  <text x="600" y="520" font-size="56" text-anchor="middle" fill="#e5e7eb" font-family="Segoe UI, Arial, sans-serif">OBS</text>
+</svg>

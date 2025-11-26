@@ -176,6 +176,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"2025-11-27-obs-mouse-capture.md": {
+	id: "2025-11-27-obs-mouse-capture.md";
+  slug: "2025-11-27-obs-mouse-capture";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 };
 "docs": {
 "about.md": {
