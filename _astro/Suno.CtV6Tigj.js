@@ -94,10 +94,10 @@ model.train(
 `,_=`---
 id: 2
 title: "我的个人博客项目：Astro + React + Tailwind 构建与发布"
-description: "采用 Astro + React Islands + TailwindCSS 的个人博客架构，强调内容为王与轻交互，集成 Supabase 与 GitHub Actions。"
+description: "采用 Astro + React Islands + TailwindCSS 的个人博客架构；main 作为源码分支，使用 GitHub Actions（pages.yml）自动发布到 GitHub Pages。"
 date: "2025-11-05"
 category: "Web 开发"
-tags: ["Astro","React","Tailwind","Supabase"]
+tags: ["Astro","React","Tailwind","Supabase","GitHub Pages","Actions"]
 image: "https://images.unsplash.com/photo-1526378722781-01b034aa3b69?auto=format&fit=crop&w=1200&q=80"
 ---
 
@@ -111,7 +111,7 @@ image: "https://images.unsplash.com/photo-1526378722781-01b034aa3b69?auto=format
 - 架构：Astro SSR/静态输出 + React Islands + TailwindCSS + Supabase
 - 目标：首屏快、可读性强、主题一致、易扩展
 - 内容组织：元数据与 Markdown 分离；React 组件渲染 GitHub 风格 Markdown + Prism 代码高亮
-- 部署：推送到 main 即触发 CI 构建与发布（见 .github/workflows/deploy.yml）
+- 部署：推送到 main 即触发 CI 构建与发布（见 .github/workflows/pages.yml）
 
 ## 二、核心技术栈与选型
 - Astro：仅在必要的岛组件进行客户端激活，降低 JS 体积与水合成本
@@ -196,19 +196,21 @@ await supabase.from('guestbook').insert({ content: '你好～', author: '我', c
 
 > 注意：匿名插入依赖 client_id，前端会在首次进入页面生成并保存在 localStorage。
 
-## 七、自动化部署（GitHub Actions）
-部署流程位于 \`.github/workflows/deploy.yml\`：
+## 七、自动化部署（GitHub Actions / GitHub Pages）
+部署流程位于 \`.github/workflows/pages.yml\`：
 - 触发：推送到 main 分支
-- 步骤：checkout → 安装依赖 → 构建（\`npm run build\`）→ 发布到 gh-pages
-- 环境变量：在构建步骤注入 \`PUBLIC_SUPABASE_URL\` 与 \`PUBLIC_SUPABASE_ANON_KEY\`，用于静态生成阶段的配置
+- 步骤：checkout → 安装依赖（\`npm ci\`）→ 构建（\`npm run build\`）→ 上传构建产物 → \`deploy-pages\` 发布到 GitHub Pages
+- Pages 设置：在仓库 Settings → Pages 中将 Source 选择为 “GitHub Actions”
+
+如需连接 Supabase，可在仓库 Secrets 中配置：
 
 \`\`\`
 env:
-  PUBLIC_SUPABASE_URL: \\\\\${{ secrets.PUBLIC_SUPABASE_URL }}
-  PUBLIC_SUPABASE_ANON_KEY: \\\\\${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+  PUBLIC_SUPABASE_URL: \\\${{ secrets.PUBLIC_SUPABASE_URL }}
+  PUBLIC_SUPABASE_ANON_KEY: \\\${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
 \`\`\`
 
-> 提示：请在仓库 Settings → Secrets 中配置以上两个变量；anon key 仅用于前端公共访问，敏感写入需通过 RLS 与触发器控制。
+> 提示：anon key 仅用于前端公共访问，敏感写入需通过 RLS 与触发器控制；main 分支作为唯一源码分支，CI 将直接从 main 构建并发布。
 
 ## 八、开发与构建
 ### 本地运行
@@ -236,7 +238,7 @@ npm run preview
 - 扩展留言板：支持编辑与删除、分页与加载更多
 
 > 如果你对实现细节或功能扩展感兴趣，欢迎在文章下方或留言板留言交流！
-`,S=`---
+`,w=`---
 id: 3
 title: "本地人声分离服务：Demucs 优先 + Spleeter 回退"
 description: "由于我的创作需要使用人声分离来处理音频文件，因此我使用trae做了一个一个基于 FastAPI 的本地人声分离服务，优先使用 Demucs，失败时自动回退 Spleeter，支持 Web 上传与 REST 下载。"
@@ -447,4 +449,205 @@ Lyrics: Mostly Chinese with keywords "XXXX".
 
 ## 结语
 Suno 让音乐“从想到做”更迅速。合理使用提示词与迭代策略，可以在短时间内产出可发布的成品或高质量草稿。如果你正准备做一次改编，不妨用上面的模板先跑几个方向，然后选择最贴近你期望的版本继续深化。
-`,f=Object.assign({"/src/content/articles/2025-07-20-cs16-yolov8-aimbot.md":h,"/src/content/articles/2025-11-05-astro-react-tailwind-blog.md":_,"/src/content/articles/2025-11-07-vocal-isolation.md":S,"/src/content/articles/2025-11-08-suno-music-model.md":b});function y(n){const e="---";let t={},s=n;if(n.startsWith(e)){const r=n.indexOf(e,e.length);if(r!==-1){const i=n.slice(e.length,r).trim();s=n.slice(r+e.length).trim(),i.split(/\r?\n/).forEach(m=>{const p=/^([a-zA-Z_]+)\s*:\s*(.*)$/.exec(m.trim());if(!p)return;const c=p[1];let a=p[2].trim();if(a.startsWith("[")&&a.endsWith("]")){const u=a.slice(1,-1).split(",").map(g=>g.trim().replace(/^['"]/,"").replace(/['"]$/,"")).filter(Boolean);t[c==="tags"?"tags":c]=u}else a=a.replace(/^['"]/,"").replace(/['"]$/,""),t[c==="description"?"excerpt":c]=a})}}const o=(r,i)=>i??"",l=Number(t.id??0);return{meta:{id:Number.isFinite(l)&&l>0?l:Math.floor(Math.random()*1e9),title:o("title",t.title),excerpt:o("excerpt",t.excerpt),date:o("date",t.date),category:o("category",t.category||"未分类"),tags:Array.isArray(t.tags)?t.tags:[],imageUrl:o("imageUrl",t.image||t.imageUrl)},content:s}}const d=Object.values(f).map(n=>y(n)),w=[...d].sort((n,e)=>{const t=new Date(n.meta.date).getTime(),s=new Date(e.meta.date).getTime();return Number.isNaN(t)||Number.isNaN(s)?0:s-t}).map(n=>n.meta),v=Object.fromEntries(d.map(n=>[n.meta.id,n.content])),P=w;function U(n){return[...P].sort((e,t)=>new Date(t.date).getTime()-new Date(e.date).getTime()).slice(0,n)}const I="/_astro/YOLO_cs2.2AI97An4.jpg",C="/_astro/web_blog.WyfuwzWs.png",O="/_astro/Vocal_Isolation.DVjCLQjV.png",L="/_astro/Suno.BSVl-Ad-.png";export{P as a,v as c,U as g,L as s,O as v,C as w,I as y};
+`,f=`---
+id: 5
+title: "用 Veo 3.1 + Google Flow 轻松做 AI 视频：不费劲也能好看"
+description: "这是一篇不端着的入门分享：Flow 是拍视频前的分镜小本子，Veo 3.1 是帮你把画面填满的工具。还聊聊最近刷到的“北极熊 AI 视频”，它们和传统拍摄相比有啥有趣的。"
+date: "2025-11-25"
+category: "视频生成"
+tags: ["Veo 3.1","Google Flow","AI Video","Prompt","Storyboard"]
+image: "/src/image_data/flow.png"
+---
+
+# 用 Veo 3.1 + Google Flow 轻松做 AI 视频：不费劲也能好看
+
+这篇就不讲太多术语，主要说两件事：
+- 为什么我喜欢用 **Veo 3.1** 搭 **Google Flow** 来做短片；
+- **Flow** 到底是什么，怎么用几行“分镜笔记”把视频串起来。
+
+---
+
+## 为什么是 Veo + Flow
+- **Veo 3.1**：画面质量稳、镜头比较连贯，风格也好调；用来“出漂亮画面”。
+- **Flow**：像拍之前写分镜的小本子，告诉它“这里推进、那里跟拍、这个地方要切字幕”；用来“把故事讲顺”。
+- 一句话：Flow 负责结构，Veo 负责颜值。先把骨架搭好，再让模型把肉补上。
+
+---
+
+## Flow 是啥（通俗版）
+别把 Flow 想复杂了，它就是“把视频拆成几个模块”：
+- **Timeline**：片子多长、帧率多少、节奏点在哪；像定闹钟那样定好节拍。
+- **Scene**：段落，比如“清晨城市”“黄昏海边”。
+- **Shot**：具体镜头，写明从几秒到几秒、相机怎么动（推进/跟拍/摇镜）、要拍什么主体。
+- **Transition**：镜头之间怎么接（直接切、淡入淡出）。
+- **Prompt**：这一段大概想要什么风格，偏暖还是偏冷，要不要电影感。
+
+总结：Flow 管结构和节奏，Veo 管把画面填得好看。两者配合，剪出来的片子更省心。
+
+---
+
+## Flow 该怎么写（超简版）
+随手一个 20 秒的三段结构，语气轻松点：
+
+\`\`\`
+flow {
+  timeline {
+    duration: 20s
+    fps: 24
+    resolution: { width: 1920, height: 1080 }
+    beats: [0s, 5s, 12s, 20s]
+  }
+
+  scene "opening" {
+    at: 0s..5s
+    shot {
+      at: 0s..5s
+      camera: { move: "push_in", speed: "slow" }
+      prompt: "清晨城市街道，阳光柔和，画面干净，有电影感"
+      negative: "过度锐化、强噪点、涂抹"
+      guidance: 7.5
+      seed: 124578
+      transition_out: { type: "dissolve", duration: 0.6s }
+    }
+  }
+
+  scene "main" {
+    at: 5s..12s
+    shot {
+      at: 5s..9s
+      camera: { move: "pan_right", speed: "medium" }
+      subject: "年轻人奔跑经过街角的咖啡店"
+      prompt: "轻快一点，街头生活感，人物清晰，肤色自然"
+      constraints: { subject_consistency: true }
+    }
+    shot {
+      at: 9s..12s
+      camera: { move: "follow", speed: "fast" }
+      prompt: "跟着人物穿过光影斑驳的巷子"
+      transition_in: { type: "cut" }
+    }
+  }
+
+  scene "ending" {
+    at: 12s..20s
+    shot {
+      at: 12s..20s
+      camera: { move: "pull_back", speed: "slow" }
+      prompt: "夕阳下城市天际线，暖色调，记得留字幕位置"
+      overlay: { type: "title", text: "A Day in City", position: "bottom_center" }
+      transition_in: { type: "dissolve", duration: 0.8s }
+    }
+  }
+}
+\`\`\`
+
+要点：
+- 每个镜头都要有开始和结束时间，节奏才稳。
+- 相机怎么动 + 想要的风格，两句话就够了。
+- 字幕/Logo这类别强求模型直接生成，后期叠个覆盖更稳。
+
+---
+
+## 最近刷到的“北极熊 AI 视频”，有啥有趣的
+说说我最近在刷到的一类 **北极熊 AI 视频**（就把它当作一个有趣的案例）：
+- **北极熊AI口音**：你需要把你要说的话变成拼音，让ai去生成
+- **场景更换**：使用flow可以很好的使用这个功能建议去试试看
+- **拍不到的镜头也能试**：比如超长轨道、悬空俯拍、极端环境，现实里很难，AI 里很容易先试出感觉。
+- **镜头语言练习像打游戏存档**：加点推进、删掉摇镜、转场改成淡入淡出，随便试，不满意就回档。
+
+这类视频不一定是真人拍的，但在“试镜头、试节奏、试风格”这件事上，AI 的迭代速度非常有意思。
+
+---
+
+## 简单上手流程（不费劲版）
+1. 先定三件事：时长、分辨率、主风格（暖/冷/电影/纪实）。
+2. 写个小 Flow：开头一个镜头、中间两个镜头、结尾一个镜头，镜头怎么动用一个词就行（推进/跟拍）。
+3. 扔给 Veo 3.1：分辨率和指导强度随便试两三个值，挑最顺的版本。
+4. 不满意就回去改：镜头内容不对就改 prompt，运动不顺就换相机动作或转场。
+5. 最后导出：字幕、Logo 后期叠上，省心还清晰。
+
+---
+
+## 常用模板（直接拿来用）
+### A. 单镜头故事板（15s 内）
+\`\`\`
+flow {
+  timeline { duration: 12s, fps: 24, resolution: { width: 1080, height: 1920 } }
+  scene "one_shot" { at: 0s..12s
+    shot { at: 0s..12s, camera: { move: "slow_pan" }, prompt: "清晰主体+暖色街景+电影光效", guidance: 7.0 }
+  }
+}
+\`\`\`
+
+### B. 多场景品牌短片（30s）
+\`\`\`
+flow {
+  timeline { duration: 30s, fps: 25, resolution: { width: 1920, height: 1080 }, beats: [0,8,20,30] }
+  scene "city_morning" { at: 0s..8s
+    shot { at: 0s..8s, camera: { move: "push_in" }, asset: { ref_image: "brand_palette.jpg" }, prompt: "清晨城市+品牌色彩" }
+  }
+  scene "product" { at: 8s..20s
+    shot { at: 8s..14s, camera: { move: "orbit" }, prompt: "产品特写+高光质感" }
+    shot { at: 14s..20s, camera: { move: "follow" }, prompt: "场景应用+用户交互" }
+  }
+  scene "closing" { at: 20s..30s
+    shot { at: 20s..30s, camera: { move: "pull_back" }, overlay: { type: "logo", src: "brand_logo.png" }, prompt: "温暖收尾+品牌标识" }
+  }
+}
+\`\`\`
+
+### C. 音乐节奏对齐（BPM 100）
+\`\`\`
+flow {
+  timeline { duration: 20s, fps: 25, beats: [0,0.6,1.2,1.8, ...], audio: { src: "music.mp3", bpm: 100 } }
+  scene "beat_sync" { at: 0s..20s
+    shot { at: 0s..5s, camera: { move: "pan_right" }, prompt: "节奏点跟随镜头移动，轻快" }
+    shot { at: 5s..10s, camera: { move: "follow" }, prompt: "速度略提升，与节拍同步" }
+    shot { at: 10s..20s, camera: { move: "push_in" }, prompt: "情绪增强，结尾留字幕位" }
+  }
+}
+\`\`\`
+
+---
+
+## 提示词与一致性小技巧
+- 结构优先：先写 Flow 的场景/镜头，再补风格与细节，避免“长文本一锅炖”。
+- 一致性约束：关键主体建议开启 \`subject_consistency\`，必要时用参考图 \`asset.ref_image\`。
+- 负向提示：明确排除“涂抹/过度锐化/过暗/文字不可读”等问题。
+- 种子与可复现：锁定 \`seed\` 便于横向比较；调 \`guidance\` 控制风格强度。
+- 外部素材：Logo/字幕建议用 overlay，不强求模型直接生成，保证清晰。
+
+---
+
+## 常见问题与排错（快速版）
+- 画面抖动：降低相机速度或缩短镜头时长；必要时切换转场为 \`cut\` 减少过渡失真。
+- 主体走样：提高一致性约束；在每个镜头明确主体与场景要素。
+- 风格不统一：在场景级设置统一的风格关键词，镜头内少改“主题风格”。
+- 文本不可读：字幕/标识用 overlay；模型生成的文字容易变形。
+- 版权与合规：素材引用需授权；生成内容遵守平台政策与法律法规。
+
+---
+
+## 结尾
+总之，Flow 负责把视频“排队”，Veo 把画面“填满”。不想折腾器材又想练镜头语言，这套组合很友好。先用上面的模板跑一版，看顺不顺，再慢慢加细节。
+
+如果你希望在网站上直接“写 Flow → 点生成 → 看结果”，我可以帮你加一个简单的工具页，支持上传素材、编辑时间线和生成预览，不改你现有的样式。
+
+---
+
+## 还有哪些视频模型
+
+- OpenAI Sora：画面质感强，长镜头和物理一致性更好，适合“看起来很真实”的短片。
+- Google Veo（3.1）：风格融合能力不错，和 Flow 搭配更可控，适合“先定结构再出画面”。
+- Runway Gen-3：创意风格多、上手简单，适合快速出片与短视频创作。
+- Pika：偏轻量、好玩，社区风格丰富，适合做趣味短片和快速尝试。
+- Luma Dream Machine：生成速度快，画面细节还不错，适合快速迭代。
+- Kuaishou Kling（快手）：国内表现亮眼，擅长高动作场景与连贯镜头。
+- 即梦：更贴近创作者工作流，结合模板、字幕、配乐，适合“直接发布”。
+- 阿里通义系（通义万相的扩展能力）：偏向一体化工具链，强调风格统一与快速出片。
+
+小结：
+- 如果追求“质感与真实感”，优先试 Sora / Veo；
+- 如果追求“快速出片与创意风格”，Gen-3 / Pika / Luma 很友好；
+- 如果希望“国内平台的一条龙发布”，快手 Kling、剪映的 AI 视频功能更省心。
+`,y=Object.assign({"/src/content/articles/2025-07-20-cs16-yolov8-aimbot.md":h,"/src/content/articles/2025-11-05-astro-react-tailwind-blog.md":_,"/src/content/articles/2025-11-07-vocal-isolation.md":w,"/src/content/articles/2025-11-08-suno-music-model.md":b,"/src/content/articles/2025-11-25-veo31-google-flow-video.md":f});function S(n){const e="---";let t={},s=n;if(n.startsWith(e)){const r=n.indexOf(e,e.length);if(r!==-1){const i=n.slice(e.length,r).trim();s=n.slice(r+e.length).trim(),i.split(/\r?\n/).forEach(d=>{const p=/^([a-zA-Z_]+)\s*:\s*(.*)$/.exec(d.trim());if(!p)return;const c=p[1];let o=p[2].trim();if(o.startsWith("[")&&o.endsWith("]")){const u=o.slice(1,-1).split(",").map(g=>g.trim().replace(/^['"]/,"").replace(/['"]$/,"")).filter(Boolean);t[c==="tags"?"tags":c]=u}else o=o.replace(/^['"]/,"").replace(/['"]$/,""),t[c==="description"?"excerpt":c]=o})}}const a=(r,i)=>i??"",l=Number(t.id??0);return{meta:{id:Number.isFinite(l)&&l>0?l:Math.floor(Math.random()*1e9),title:a("title",t.title),excerpt:a("excerpt",t.excerpt),date:a("date",t.date),category:a("category",t.category||"未分类"),tags:Array.isArray(t.tags)?t.tags:[],imageUrl:a("imageUrl",t.image||t.imageUrl)},content:s}}const m=Object.values(y).map(n=>S(n)),v=[...m].sort((n,e)=>{const t=new Date(n.meta.date).getTime(),s=new Date(e.meta.date).getTime();return Number.isNaN(t)||Number.isNaN(s)?0:s-t}).map(n=>n.meta),I=Object.fromEntries(m.map(n=>[n.meta.id,n.content])),P=v;function C(n){return[...P].sort((e,t)=>new Date(t.date).getTime()-new Date(e.date).getTime()).slice(0,n)}const k="/_astro/YOLO_cs2.2AI97An4.jpg",L="/_astro/web_blog.WyfuwzWs.png",O="/_astro/Vocal_Isolation.DVjCLQjV.png",U="/_astro/Suno.BSVl-Ad-.png";export{P as a,I as c,C as g,U as s,O as v,L as w,k as y};
