@@ -1,4 +1,4 @@
-const h=`---
+const I=`---
 id: 1
 title: "CS16 目标检测与自动瞄准项目"
 description: "基于 YOLOv8 的 CS16 屏幕区域检测与自动瞄准工具，支持 GPU/CPU、自定义模型与训练。"
@@ -91,7 +91,7 @@ model.train(
 2. **游戏规则**：本工具仅用于学习和技术研究，请勿在官方竞技或禁止辅助工具的场景中使用，避免违反游戏协议。 
 3. **GPU 依赖**：若需使用 GPU 加速，需提前安装对应版本的 CUDA 和 CuDNN（需与 \`torch\` 版本匹配，可参考 \`https://pytorch.org/\`  安装命令）。 
 4. **错误处理**：运行中若出现报错，可查看终端输出的“有错误：XXX”信息，常见问题包括模型文件缺失、依赖库版本不兼容、屏幕分辨率不匹配等。
-`,_=`---
+`,h=`---
 id: 2
 title: "我的个人博客项目：Astro + React + Tailwind 构建与发布"
 description: "采用 Astro + React Islands + TailwindCSS 的个人博客架构；main 作为源码分支，使用 GitHub Actions（pages.yml）自动发布到 GitHub Pages。"
@@ -238,7 +238,7 @@ npm run preview
 - 扩展留言板：支持编辑与删除、分页与加载更多
 
 > 如果你对实现细节或功能扩展感兴趣，欢迎在文章下方或留言板留言交流！
-`,w=`---
+`,b=`---
 id: 3
 title: "本地人声分离服务：Demucs 优先 + Spleeter 回退"
 description: "由于我的创作需要使用人声分离来处理音频文件，因此我使用trae做了一个一个基于 FastAPI 的本地人声分离服务，优先使用 Demucs，失败时自动回退 Spleeter，支持 Web 上传与 REST 下载。"
@@ -339,7 +339,7 @@ Vocal_Isolation/
 - 前端页面已内置上传与状态提示，适合普通用户；开发者可直接使用 API 脚本化批处理
 
 > 提醒：此项目仅用于技术演示，请遵守相关模型与依赖的许可证要求。
-`,b=`---
+`,S=`---
 id: 4
 title: "Suno 音乐生成模型：简介与我自己的改编实践"
 description: "Suno 是一款端到端 AI 音乐生成工具，支持歌词、风格、节奏等多维提示，适合改编与原创。这里我想主要介绍一下我自己的实践经历，我改编的是《等你下课》这首歌曲。"
@@ -449,7 +449,7 @@ Lyrics: Mostly Chinese with keywords "XXXX".
 
 ## 结语
 Suno 让音乐“从想到做”更迅速。合理使用提示词与迭代策略，可以在短时间内产出可发布的成品或高质量草稿。如果你正准备做一次改编，不妨用上面的模板先跑几个方向，然后选择最贴近你期望的版本继续深化。
-`,f=`---
+`,_=`---
 id: 5
 title: "用 Veo 3.1 + Google Flow 轻松做 AI 视频：不费劲也能好看"
 description: "这是一篇不端着的入门分享：Flow 是拍视频前的分镜小本子，Veo 3.1 是帮你把画面填满的工具。还聊聊最近刷到的“北极熊 AI 视频”，它们和传统拍摄相比有啥有趣的。"
@@ -650,4 +650,36 @@ flow {
 - 如果追求“质感与真实感”，优先试 Sora / Veo；
 - 如果追求“快速出片与创意风格”，Gen-3 / Pika / Luma 很友好；
 - 如果希望“国内平台的一条龙发布”，快手 Kling、剪映的 AI 视频功能更省心。
-`,y=Object.assign({"/src/content/articles/2025-07-20-cs16-yolov8-aimbot.md":h,"/src/content/articles/2025-11-05-astro-react-tailwind-blog.md":_,"/src/content/articles/2025-11-07-vocal-isolation.md":w,"/src/content/articles/2025-11-08-suno-music-model.md":b,"/src/content/articles/2025-11-25-veo31-google-flow-video.md":f});function S(n){const e="---";let t={},s=n;if(n.startsWith(e)){const r=n.indexOf(e,e.length);if(r!==-1){const i=n.slice(e.length,r).trim();s=n.slice(r+e.length).trim(),i.split(/\r?\n/).forEach(d=>{const p=/^([a-zA-Z_]+)\s*:\s*(.*)$/.exec(d.trim());if(!p)return;const c=p[1];let o=p[2].trim();if(o.startsWith("[")&&o.endsWith("]")){const u=o.slice(1,-1).split(",").map(g=>g.trim().replace(/^['"]/,"").replace(/['"]$/,"")).filter(Boolean);t[c==="tags"?"tags":c]=u}else o=o.replace(/^['"]/,"").replace(/['"]$/,""),t[c==="description"?"excerpt":c]=o})}}const a=(r,i)=>i??"",l=Number(t.id??0);return{meta:{id:Number.isFinite(l)&&l>0?l:Math.floor(Math.random()*1e9),title:a("title",t.title),excerpt:a("excerpt",t.excerpt),date:a("date",t.date),category:a("category",t.category||"未分类"),tags:Array.isArray(t.tags)?t.tags:[],imageUrl:a("imageUrl",t.image||t.imageUrl)},content:s}}const m=Object.values(y).map(n=>S(n)),v=[...m].sort((n,e)=>{const t=new Date(n.meta.date).getTime(),s=new Date(e.meta.date).getTime();return Number.isNaN(t)||Number.isNaN(s)?0:s-t}).map(n=>n.meta),I=Object.fromEntries(m.map(n=>[n.meta.id,n.content])),P=v;function C(n){return[...P].sort((e,t)=>new Date(t.date).getTime()-new Date(e.date).getTime()).slice(0,n)}const k="/_astro/YOLO_cs2.2AI97An4.jpg",L="/_astro/web_blog.WyfuwzWs.png",O="/_astro/Vocal_Isolation.DVjCLQjV.png",U="/_astro/Suno.BSVl-Ad-.png";export{P as a,I as c,C as g,U as s,O as v,L as w,k as y};
+`,w=`---
+id: 6
+title: "OBS_Mouse_capture：鼠标跟随与缩放脚本（新版兼容）"
+description: "兼容 OBS 29/30+ 的鼠标跟随缩放脚本，适配新接口，跨平台可用，嵌套场景稳定。"
+date: "2025-11-27"
+category: "视频录制"
+tags: ["OBS","脚本","Lua","屏幕录制","创作流程"]
+image: "https://images.unsplash.com/photo-1556157382-97e9f7a49153?auto=format&fit=crop&w=1200&q=80"
+---
+
+# OBS_Mouse_capture
+
+该脚本基于 BlankSourceCode 的 \`obs-zoom-to-mouse\` 项目进行更新。原因：原脚本在当前版本的 OBS 中已不再兼容，需要适配新的接口与行为。github:https://github.com/zslxy1/OBS_Mouse_capture
+
+本次更新的改动概述：
+- 兼容 OBS 29/30 及以上版本的场景项变换接口（在 \`get_info\`/\`set_info\` 与 \`get_transform\`/\`set_transform\` 之间做运行时适配）。
+- 适配 macOS 显示源 ID 变更（根据 OBS 版本在 \`display_capture\`/\`screen_capture\` 间切换），确保跨平台可用。
+- 支持在嵌套场景中查找并锁定目标源，避免场景切换或多级场景时失效。
+- 自动将“变换裁剪”迁移为等效的裁剪滤镜，保证缩放与跟随逻辑一致、可控。
+- 根据帧间隔设置计时器更新频率，改进缩放/跟随动画的流畅度与稳定性。
+- 补充调试日志与帮助信息，便于快速定位问题与确认当前设置。
+
+仓库内容：
+- \`obs-zoom-to-mouse.lua\`：更新后的 OBS 脚本。
+- \`README.md\`：本说明文件。
+
+使用方式与原项目保持一致，将脚本加载到 OBS 的脚本管理器中即可。
+
+温馨提示：
+- 脚本对场景结构有一定依赖，建议先在测试场景中验证缩放与跟随效果，再用于正式录制。
+- 如出现缩放卡顿或抖动，可适当提高计时器刷新频率并检查场景滤镜链是否过多。
+
+`,y=Object.assign({"/src/content/articles/2025-07-20-cs16-yolov8-aimbot.md":I,"/src/content/articles/2025-11-05-astro-react-tailwind-blog.md":h,"/src/content/articles/2025-11-07-vocal-isolation.md":b,"/src/content/articles/2025-11-08-suno-music-model.md":S,"/src/content/articles/2025-11-25-veo31-google-flow-video.md":_,"/src/content/articles/2025-11-27-obs-mouse-capture.md":w});function A(n){const e="---";let t={},s=n;if(n.startsWith(e)){const r=n.indexOf(e,e.length);if(r!==-1){const i=n.slice(e.length,r).trim();s=n.slice(r+e.length).trim(),i.split(/\r?\n/).forEach(d=>{const m=/^([a-zA-Z_]+)\s*:\s*(.*)$/.exec(d.trim());if(!m)return;const c=m[1];let o=m[2].trim();if(o.startsWith("[")&&o.endsWith("]")){const u=o.slice(1,-1).split(",").map(g=>g.trim().replace(/^['"]/,"").replace(/['"]$/,"")).filter(Boolean);t[c==="tags"?"tags":c]=u}else o=o.replace(/^['"]/,"").replace(/['"]$/,""),t[c==="description"?"excerpt":c]=o})}}const a=(r,i)=>i??"",l=Number(t.id??0);return{meta:{id:Number.isFinite(l)&&l>0?l:Math.floor(Math.random()*1e9),title:a("title",t.title),excerpt:a("excerpt",t.excerpt),date:a("date",t.date),category:a("category",t.category||"未分类"),tags:Array.isArray(t.tags)?t.tags:[],imageUrl:a("imageUrl",t.image||t.imageUrl)},content:s}}const p=Object.values(y).map(n=>A(n)),f=[...p].sort((n,e)=>{const t=new Date(n.meta.date).getTime(),s=new Date(e.meta.date).getTime();return Number.isNaN(t)||Number.isNaN(s)?0:s-t}).map(n=>n.meta),v=Object.fromEntries(p.map(n=>[n.meta.id,n.content])),P=f;function M(n){return[...P].sort((e,t)=>new Date(t.date).getTime()-new Date(e.date).getTime()).slice(0,n)}const k="/_astro/YOLO_cs2.2AI97An4.jpg",B="/_astro/web_blog.WyfuwzWs.png",O="/_astro/Vocal_Isolation.DVjCLQjV.png",G="/_astro/Suno.BSVl-Ad-.png",U="/_astro/flow.Bzv6SBB5.png",L="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgdmlld0JveD0iMCAwIDEyMDAgNjc1Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTE4MjciLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMWYyOTM3Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIGZpbGw9InVybCgjZykiLz4KICA8cmVjdCB4PSIyMDAiIHk9IjEyMCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIHJ4PSIyNCIgZmlsbD0iIzBmMTcyYSIgc3Ryb2tlPSIjMzM0MTU1IiBzdHJva2Utd2lkdGg9IjYiLz4KICA8cmVjdCB4PSIyMzAiIHk9IjE1MCIgd2lkdGg9Ijc0MCIgaGVpZ2h0PSIzOTAiIHJ4PSIxNiIgZmlsbD0iIzAyMDYxNyIvPgogIDxjaXJjbGUgY3g9IjYwMCIgY3k9IjM0NSIgcj0iMTQwIiBmaWxsPSIjMGIxMjIwIiBzdHJva2U9IiMzYjgyZjYiIHN0cm9rZS13aWR0aD0iOCIvPgogIDxwYXRoIGQ9Ik02MDAgMjQ1YzQwIDAgNjAgMjUgNjAgNTUgMCAzMC0yMCA1MC01MCA1NSAxMCAyMCAxMCA0MC0xMCA1NS0zMCAyNS03NSAxMC04NS0yNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOTNjNWZkIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cmVjdCB4PSI0NjAiIHk9IjU5MCIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxNiIgcng9IjgiIGZpbGw9IiMzMzQxNTUiLz4KICA8dGV4dCB4PSI2MDAiIHk9IjUyMCIgZm9udC1zaXplPSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2U1ZTdlYiIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBBcmlhbCwgc2Fucy1zZXJpZiI+T0JTPC90ZXh0Pgo8L3N2Zz4K";export{P as a,v as c,U as f,M as g,L as o,G as s,O as v,B as w,k as y};
